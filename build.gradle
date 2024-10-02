@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+apply plugin: 'maven-publish'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'de.legoshi.Main'
+    }
+}
+
+shadowJar {
+    group = 'YourProjectName'
+    version = '1.0.0'
+    archivesBaseName = 'CMDTool'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId "de.legoshi"
+            artifactId "cmdtool-api"
+            version "1.0.0"
+            from components.java
+        }
+    }
+}
